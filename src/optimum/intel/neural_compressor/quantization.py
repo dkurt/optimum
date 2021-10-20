@@ -235,6 +235,14 @@ class IncQuantizerForSequenceClassification(IncQuantizer):
 class IncQuantizerForTokenClassification(IncQuantizer):
     from transformers import AutoModelForTokenClassification
     TRANSFORMERS_AUTO_CLASS = AutoModelForTokenClassification
+class IncQuantizerForMultipleChoice(IncQuantizer):
+    from transformers import AutoModelForMultipleChoice
+    TRANSFORMERS_AUTO_CLASS = AutoModelForMultipleChoice
+
+
+class IncQuantizerForSeq2SeqLM(IncQuantizer):
+    from transformers import AutoModelForSeq2SeqLM
+    TRANSFORMERS_AUTO_CLASS = AutoModelForSeq2SeqLM
 
 
 def apply_quantization_from_config(q_config: Dict, model: torch.nn.Module) -> torch.nn.Module:
@@ -316,6 +324,7 @@ class IncQuantizedModel:
             input_names: Optional[List[str]] = None,
             batch_size: Optional[int] = None,
             sequence_length: Optional[Union[int, List[int], Tuple[int]]] = None,
+            num_choices: Optional[int] = -1,
             **kwargs
     ) -> torch.nn.Module:
         """
@@ -384,6 +393,7 @@ class IncQuantizedModel:
                 input_names=input_names,
                 batch_size=batch_size,
                 sequence_length=sequence_length,
+                num_choices=num_choices,
             )
 
         q_model = apply_quantization_from_config(inc_config.config, model)
@@ -441,6 +451,14 @@ class IncQuantizedModelForSequenceClassification(IncQuantizedModel):
 class IncQuantizedModelForTokenClassification(IncQuantizedModel):
     from transformers import AutoModelForTokenClassification
     TRANSFORMERS_AUTO_CLASS = AutoModelForTokenClassification
+class IncQuantizedModelForMultipleChoice(IncQuantizedModel):
+    from transformers import AutoModelForMultipleChoice
+    TRANSFORMERS_AUTO_CLASS = AutoModelForMultipleChoice
+
+
+class IncQuantizedModelForSeq2SeqLM(IncQuantizedModel):
+    from transformers import AutoModelForSeq2SeqLM
+    TRANSFORMERS_AUTO_CLASS = AutoModelForSeq2SeqLM
 
 
 def quantization_approach(config):

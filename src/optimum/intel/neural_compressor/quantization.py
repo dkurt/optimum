@@ -234,6 +234,8 @@ class IncQuantizerForSequenceClassification(IncQuantizer):
 class IncQuantizerForTokenClassification(IncQuantizer):
     from transformers import AutoModelForTokenClassification
     TRANSFORMERS_AUTO_CLASS = AutoModelForTokenClassification
+
+
 class IncQuantizerForMultipleChoice(IncQuantizer):
     from transformers import AutoModelForMultipleChoice
     TRANSFORMERS_AUTO_CLASS = AutoModelForMultipleChoice
@@ -244,17 +246,17 @@ class IncQuantizerForSeq2SeqLM(IncQuantizer):
     TRANSFORMERS_AUTO_CLASS = AutoModelForSeq2SeqLM
 
 
-class IncQuantizerModelForCausalLM(IncQuantizer):
+class IncQuantizerForCausalLM(IncQuantizer):
     from transformers import AutoModelForCausalLM
     TRANSFORMERS_AUTO_CLASS = AutoModelForCausalLM
 
 
-class IncQuantizerModelForMaskedLM(IncQuantizer):
+class IncQuantizerForMaskedLM(IncQuantizer):
     from transformers import AutoModelForMaskedLM
     TRANSFORMERS_AUTO_CLASS = AutoModelForMaskedLM
 
 
-class IncQuantizerModelForXLNetLM(IncQuantizer):
+class IncQuantizerForXLNetLM(IncQuantizer):
     from transformers import XLNetLMHeadModel
     TRANSFORMERS_AUTO_CLASS = XLNetLMHeadModel
 
@@ -463,6 +465,8 @@ class IncQuantizedModelForSequenceClassification(IncQuantizedModel):
 class IncQuantizedModelForTokenClassification(IncQuantizedModel):
     from transformers import AutoModelForTokenClassification
     TRANSFORMERS_AUTO_CLASS = AutoModelForTokenClassification
+
+
 class IncQuantizedModelForMultipleChoice(IncQuantizedModel):
     from transformers import AutoModelForMultipleChoice
     TRANSFORMERS_AUTO_CLASS = AutoModelForMultipleChoice
@@ -599,4 +603,3 @@ def quantize_aware_training(model, config_path_or_obj, eval_func, train_func):
     model = quantizer()
 
     return model.model
-

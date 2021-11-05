@@ -38,7 +38,7 @@ sys.path.extend(SRC_DIRS)
 
 if SRC_DIRS is not None:
     import run_glue
-    #import run_qa
+    import run_qa
     import run_ner
     import run_summarization
     import run_swag

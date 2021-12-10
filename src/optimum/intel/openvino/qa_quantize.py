@@ -12,6 +12,7 @@ from transformers import glue_output_modes as output_modes
 from transformers import glue_processors as processors
 
 import torch
+import logger
 
 from optimum.intel.openvino.quantize_utils import QADataLoader
 

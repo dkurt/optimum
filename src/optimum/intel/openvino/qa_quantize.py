@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import yaml
-import logging
+import logging as log
 import collections
 import pandas as pd
 from transformers import GPT2_PRETRAINED_MODEL_ARCHIVE_LIST, AutoTokenizer
@@ -12,7 +12,6 @@ from transformers import glue_output_modes as output_modes
 from transformers import glue_processors as processors
 
 import torch
-import logger
 
 from optimum.intel.openvino.quantize_utils import QADataLoader
 
@@ -181,7 +180,7 @@ class OVQuantizerForQuestionAnswering():
             try:
                 config = yaml.safe_load(stream)
             except yaml.YAMLError as err:
-                logger.error(err)
+                log.error(err)
 
         return config
 

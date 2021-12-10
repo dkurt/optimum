@@ -73,7 +73,7 @@ class OVBertForQuestionAnsweringTest(unittest.TestCase):
             try:
                 config = yaml.safe_load(stream)
             except yaml.YAMLError as err:
-                logger.error(err)
+                log.error(err)
 
         max_length = config['dataset']['max_length']
 

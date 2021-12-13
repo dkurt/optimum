@@ -38,11 +38,11 @@ def load_ov_model_from_pytorch(model):
 
     with torch.no_grad():
         torch.onnx.export(
-            model, inputs, buf, input_names=["input_ids", "attention_mask"], output_names=outputs, opset_version=11
+            model, inputs, '/tmp/model.onnx', input_names=["input_ids", "attention_mask"], output_names=outputs, opset_version=11
         )
 
-    net = ie.read_network(buf.getvalue(), b"", init_from_buffer=True)
-    return OVPreTrainedModel(net, model.config)
+    net = ie.read_network(os.path.abspath('/tmp/model.onnx'), b"")
+    return OVPreTrainedModel(net, onnx_path=os.path.abspath('/tmp/model.onnx'), config=model.config)
 
 
 def load_ov_model_from_tf(model):
@@ -66,7 +66,7 @@ def load_ov_model_from_tf(model):
         check=True,
     )
     net = ie.read_network("model.xml")
-    return OVPreTrainedModel(net, model.config)
+    return OVPreTrainedModel(net, xml_path="model.xml", config=model.config)
 
 
 def load_ov_model_from_ir(xml_path, bin_path):
@@ -84,7 +84,7 @@ class OVPreTrainedModel(GenerationMixin):
     _pt_auto_model = None
     _tf_auto_model = None
 
-    def __init__(self, net, config=None):
+    def __init__(self, net, xml_path=None, bin_path=None, onnx_path=None, config=None):
         super().__init__()
         self.net = net
         self.exec_net = None
@@ -93,6 +93,7 @@ class OVPreTrainedModel(GenerationMixin):
         self.ov_config = {}
         self.ov_device = "CPU"
         self.device = torch.device("cpu")
+        self.onnx_path = onnx_path
 
     @classmethod
     def from_pretrained(cls, model_name_or_path, *model_args, **kwargs):
@@ -181,7 +182,6 @@ class OVPreTrainedModel(GenerationMixin):
                 logger.info(f"loading weights file {archive_files} from cache at {resolved_archive_files}")
         else:
             resolved_archive_files = None
-
         return load_ov_model_from_ir(*resolved_archive_files)
 
     def save_pretrained(

@@ -2,15 +2,6 @@ import os
 import numpy as np
 import yaml
 import logging as log
-import collections
-import pandas as pd
-from transformers import GPT2_PRETRAINED_MODEL_ARCHIVE_LIST, AutoTokenizer
-from transformers import (
-    glue_convert_examples_to_features as convert_examples_to_features,
-)
-from transformers import glue_output_modes as output_modes
-from transformers import glue_processors as processors
-
 import torch
 
 from optimum.intel.openvino.quantize_utils import QADataLoader
@@ -26,7 +17,6 @@ from compression.api import Metric
 from addict import Dict
 
 from datasets import load_dataset, load_metric
-from transformers.modeling_outputs import QuestionAnsweringModelOutput
 
 class bcolors:
     """

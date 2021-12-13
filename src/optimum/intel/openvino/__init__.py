@@ -6,7 +6,7 @@ from .modeling_ov_auto import (
     OVAutoModelForSequenceClassification,
 )
 
-from .qa_quantize import OVQuantizerForQuestionAnswering as OVQuantizerForQuestionAnswering
+from .qa_quantize import OVQuantizerForQuestionAnswering 
 
 __all__ = [
     "OVAutoModel",
